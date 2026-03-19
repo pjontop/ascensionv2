@@ -9,6 +9,7 @@
 #   --name react_starter_kit react_starter_kit
 #
 # Optional: you may pass SECRET_KEY_BASE directly instead of RAILS_MASTER_KEY.
+# If only RAILS_MASTER_KEY is provided, entrypoint derives SECRET_KEY_BASE automatically.
 
 # For a containerized dev environment, see Dev Containers: https://guides.rubyonrails.org/getting_started_with_devcontainer.html
 

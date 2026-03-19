@@ -1,15 +1,15 @@
 #!/bin/bash -e
 
 # Ensure production can boot before db:prepare by resolving SECRET_KEY_BASE.
-# Priority: explicit env var -> production credential -> top-level credential.
+# Priority: explicit env var -> deterministic derivation from RAILS_MASTER_KEY.
 if [ "${RAILS_ENV}" = "production" ] && [ -z "${SECRET_KEY_BASE:-}" ]; then
   if [ -n "${RAILS_MASTER_KEY:-}" ]; then
-    SECRET_KEY_BASE="$(bin/rails credentials:show 2>/dev/null | ruby -ryaml -e 'd = YAML.safe_load(STDIN.read) || {}; puts d.dig("production", "secret_key_base") || d["secret_key_base"]')"
+    SECRET_KEY_BASE="$(ruby -rdigest -e 'print Digest::SHA256.hexdigest(ARGV[0])' "${RAILS_MASTER_KEY}")"
     export SECRET_KEY_BASE
   fi
 
   if [ -z "${SECRET_KEY_BASE:-}" ]; then
-    echo "ERROR: SECRET_KEY_BASE is missing. Set SECRET_KEY_BASE directly or provide RAILS_MASTER_KEY with secret_key_base in credentials." >&2
+    echo "ERROR: SECRET_KEY_BASE is missing. Set SECRET_KEY_BASE directly or provide RAILS_MASTER_KEY. Note: config/master.key is excluded from Docker build context by .dockerignore." >&2
     exit 1
   fi
 fi
