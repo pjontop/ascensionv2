@@ -7,11 +7,6 @@ import { createRoot } from "react-dom/client"
 import { initializeTheme } from "@/hooks/use-appearance"
 import PersistentLayout from "@/layouts/persistent-layout"
 
-posthog.init(import.meta.env.VITE_POSTHOG_KEY, {
-  api_host: import.meta.env.VITE_POSTHOG_HOST,
-  person_profiles: "identified_only",
-})
-
 const appName = "Ascension"
 
 void createInertiaApp({
@@ -42,6 +37,17 @@ void createInertiaApp({
   },
 
   setup({ el, App, props }) {
+    const sharedProps = props.initialPage.props as {
+      posthog?: { key?: string | null; host?: string | null }
+    }
+
+    if (sharedProps.posthog?.key) {
+      posthog.init(sharedProps.posthog.key, {
+        api_host: sharedProps.posthog.host ?? undefined,
+        person_profiles: "identified_only",
+      })
+    }
+
     // Uncomment the following to enable SSR hydration:
     // if (el.hasChildNodes()) {
     //   hydrateRoot(el, <App {...props} />)

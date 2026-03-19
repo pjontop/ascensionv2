@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Rsvp < ApplicationRecord
-  validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: true
+  validates :email, presence: true, format: {with: URI::MailTo::EMAIL_REGEXP}, uniqueness: true
   validates :submitted_at, presence: true
   validate :email_must_be_valid_for_delivery
 

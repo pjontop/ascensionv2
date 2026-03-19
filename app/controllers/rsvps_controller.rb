@@ -6,6 +6,8 @@ require "net/http"
 
 class RsvpsController < InertiaController
   def create
+    posthog_enabled = Rails.application.credentials.dig(:posthog, :project_token).present?
+
     rsvp = Rsvp.new(
       email: rsvp_params[:email],
       submitted_at: Time.current,
@@ -18,26 +20,30 @@ class RsvpsController < InertiaController
       SyncRsvpToLoopsJob.perform_later(rsvp.id)
 
       # PostHog: Identify and track successful RSVP submission
-      PostHog.identify(
-        distinct_id: rsvp.email,
-        properties: { email: rsvp.email }
-      )
-      PostHog.capture(
-        distinct_id: rsvp.email,
-        event: "rsvp_submitted",
-        properties: { ip_address: rsvp.ip_address }
-      )
+      if posthog_enabled
+        PostHog.identify(
+          distinct_id: rsvp.email,
+          properties: {email: rsvp.email}
+        )
+        PostHog.capture(
+          distinct_id: rsvp.email,
+          event: "rsvp_submitted",
+          properties: {ip_address: rsvp.ip_address}
+        )
+      end
 
       redirect_to landing_path, notice: "We got you! Cya there!"
     else
       # PostHog: Track failed RSVP submission
-      PostHog.capture(
-        distinct_id: rsvp_params[:email].presence || "anonymous",
-        event: "rsvp_failed",
-        properties: { errors: rsvp.errors.to_hash(true) }
-      )
+      if posthog_enabled
+        PostHog.capture(
+          distinct_id: rsvp_params[:email].presence || "anonymous",
+          event: "rsvp_failed",
+          properties: {errors: rsvp.errors.to_hash(true)}
+        )
+      end
 
-      redirect_back_or_to landing_path, inertia: { errors: rsvp.errors.to_hash(true) }
+      redirect_back_or_to landing_path, inertia: {errors: rsvp.errors.to_hash(true)}
     end
   end
 

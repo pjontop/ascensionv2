@@ -26,7 +26,7 @@ class SyncRsvpToLoopsJob < ApplicationJob
     PostHog.capture(
       distinct_id: rsvp.email,
       event: "loops_sync_completed",
-      properties: { rsvp_id: rsvp_id }
+      properties: {rsvp_id: rsvp_id}
     )
   rescue LoopsSdk::RateLimitError => e
     Rails.logger.error("Loops Rate Limit WHILE Rsvp #{rsvp_id}: #{e.message}")
@@ -34,7 +34,7 @@ class SyncRsvpToLoopsJob < ApplicationJob
     PostHog.capture(
       distinct_id: rsvp&.email || "anonymous",
       event: "loops_sync_failed",
-      properties: { rsvp_id: rsvp_id, error_type: "rate_limit", error_message: e.message }
+      properties: {rsvp_id: rsvp_id, error_type: "rate_limit", error_message: e.message}
     )
   rescue LoopsSdk::APIError => e
     message = e.respond_to?(:json) ? e.json&.fetch("message", e.message) : e.message
@@ -43,7 +43,7 @@ class SyncRsvpToLoopsJob < ApplicationJob
     PostHog.capture(
       distinct_id: rsvp&.email || "anonymous",
       event: "loops_sync_failed",
-      properties: { rsvp_id: rsvp_id, error_type: "api_error", error_message: message }
+      properties: {rsvp_id: rsvp_id, error_type: "api_error", error_message: message}
     )
   rescue StandardError => e
     Rails.logger.error("idk bruh what error dis is (loops rsvp) #{rsvp_id}: #{e.class} - #{e.message}")
@@ -65,7 +65,7 @@ class SyncRsvpToLoopsJob < ApplicationJob
   def event_properties(rsvp)
     {
       submittedAt: rsvp.submitted_at&.iso8601,
-      ipAddress: rsvp.ip_address,
+      ipAddress: rsvp.ip_address
     }.compact
   end
 end
