@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "skills": {
+    "alba-inertia": {
+      "source": "inertia-rails/skills",
+      "sourceType": "github",
+      "computedHash": "8cf79527b466be137788858868ddad86d9023cc75a2b7f8cb4734aa72316122e"
+    },
+    "inertia-rails-architecture": {
+      "source": "inertia-rails/skills",
+      "sourceType": "github",
+      "computedHash": "0df28a8608906ab197357e7b2668e649f9956b3d549594f00c8979c589b88f01"
+    },
+    "inertia-rails-best-practices": {
+      "source": "cole-robertson/inertia-rails-skills",
+      "sourceType": "github",
+      "computedHash": "183f9ad0881b716cdbdfa8705d8644a9d249f32777dcfd11b3b896537a21d7ae"
+    },
+    "inertia-rails-controllers": {
+      "source": "inertia-rails/skills",
+      "sourceType": "github",
+      "computedHash": "612dfa44798d0b8554c08bae1e26c8d5c995f040239e41689c71e4ea19e106af"
+    },
+    "inertia-rails-forms": {
+      "source": "inertia-rails/skills",
+      "sourceType": "github",
+      "computedHash": "47e38c3efe7e602d45b4a7edc7d36c35a98b5ce6146e5318dc0a2ea6182b2a60"
+    },
+    "inertia-rails-pages": {
+      "source": "inertia-rails/skills",
+      "sourceType": "github",
+      "computedHash": "c5fa65f568407746a34f13a07d826549b6bfad6d610255b7852ceed172ba443c"
+    },
+    "inertia-rails-testing": {
+      "source": "inertia-rails/skills",
+      "sourceType": "github",
+      "computedHash": "fb821201cf90578180eaf9004e914ce39412c3b5f3cefdbb155c227708327ece"
+    },
+    "inertia-rails-typescript": {
+      "source": "inertia-rails/skills",
+      "sourceType": "github",
+      "computedHash": "49f9c1eea1decbe8196ae9f5dfaecf7fff384c5bd5d828dd498b0b5e3bdede34"
+    },
+    "vercel-composition-patterns": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "computedHash": "f98931159fa9c7fed043bcd18a891a46dcf89ababa38df13a4c5b7b30dc0ce07"
+    },
+    "vercel-react-best-practices": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "computedHash": "c858d2d9023e73edb4e5504868cb0e36313e58fd56af12ef888b43c5634a3c17"
+    }
+  }
+}
