@@ -46,7 +46,7 @@ class SyncRsvpToLoopsJob < ApplicationJob
       properties: {rsvp_id: rsvp_id, error_type: "api_error", error_message: message}
     )
   rescue StandardError => e
-    Rails.logger.error("idk bruh what error dis is (loops rsvp) #{rsvp_id}: #{e.class} - #{e.message}")
+    Rails.logger.error("Unknown Loops Error for RSVP #{rsvp_id}: #{e.class} - #{e.message}")
   end
 
   private

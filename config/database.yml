@@ -13,7 +13,11 @@ default: &default
 
 development:
   <<: *default
-  url: <%= Rails.application.credentials.dig(:database, :url) %>
+  database: ascension_development
+  host: <%= ENV.fetch("DB_HOST", "127.0.0.1") %>
+  port: <%= ENV.fetch("DB_PORT", 5432) %>
+  username: <%= ENV.fetch("DB_USER", ENV["USER"]) %>
+  password: <%= ENV["DB_PASSWORD"] %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

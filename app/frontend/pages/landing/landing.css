@@ -196,5 +196,6 @@
     --landing-cta-width: min(90vw, 29.2rem);
     --landing-cta-height: 2.5rem;
     --landing-cta-button-top-offset: 25rem;
+    background-position: left center;
   }
 }
