@@ -45,6 +45,9 @@ gem "inertia_rails", "~> 3.6"
 # An authentication system generator for Rails applications
 # we leave gem here to watch for security updates
 gem "authentication-zero"
+gem "omniauth"
+gem "omniauth_openid_connect"
+gem "omniauth-rails_csrf_protection"
 
 # Brings Rails named routes to javascript
 gem "js-routes"

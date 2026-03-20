@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_18_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_20_154757) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -37,12 +37,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_18_120000) do
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.string "email", null: false
-    t.string "name", null: false
-    t.string "password_digest", null: false
+    t.string "email"
+    t.boolean "email_verified"
+    t.string "name"
+    t.string "slack_id"
+    t.string "uid"
     t.datetime "updated_at", null: false
-    t.boolean "verified", default: false, null: false
+    t.string "verification_status"
+    t.boolean "ysws_eligible"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["uid"], name: "index_users_on_uid", unique: true
   end
 
   add_foreign_key "sessions", "users"

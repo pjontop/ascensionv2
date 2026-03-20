@@ -4,6 +4,12 @@ Rails.application.routes.draw do
   get :landing, to: "landing#index"
   resources :rsvps, only: :create
 
+  # Hack Club OpenID auth
+  get "/auth/login", to: "auth#login", as: :login
+  get "/auth/logout", to: "auth#logout", as: :logout
+  match "/auth/hackclub/callback", to: "auth#callback", via: %i[get post]
+  get "/auth/failure", to: "auth#failure"
+
   root "landing#index"
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

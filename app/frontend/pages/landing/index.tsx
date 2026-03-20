@@ -10,18 +10,33 @@ import { SpinnerCustom } from "@/components/ui/spinner"
 import "./landing.css"
 
 export default function Landing() {
+  const csrfToken = document
+    .querySelector('meta[name="csrf-token"]')
+    ?.getAttribute("content")
+  const authenticityToken = csrfToken ?? ""
+
   return (
     <>
       <Head title="Ascension" />
       <main className="landing-page min-h-screen">
-        <Button
-          className="cta-secondary-button"
-          variant="ctaSecondary"
-          size="ctaSecondary"
-          type="button"
-        >
-          login →
-        </Button>
+        <form method="post" action="/auth/hackclub" className="contents">
+          <input
+            type="hidden"
+            name="authenticity_token"
+            value={authenticityToken}
+          />
+          <Button
+            className="cta-secondary-button"
+            variant="ctaSecondary"
+            size="ctaSecondary"
+            type="submit"
+            onClick={() => {
+              posthog.capture("auth_login_clicked", { provider: "hackclub" })
+            }}
+          >
+            login →
+          </Button>
+        </form>
         <img
           className="landing-page__logo"
           src={ascensionHero}
