@@ -11,7 +11,11 @@ class AuthController < ApplicationController
       user_agent: request.user_agent
     )
 
-    redirect_to "/auth/hackclub"
+    if request.headers["X-Inertia"] == "true"
+      inertia_location "/auth/hackclub"
+    else
+      redirect_to "/auth/hackclub", allow_other_host: true
+    end
   end
 
   def callback

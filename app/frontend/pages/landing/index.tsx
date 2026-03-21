@@ -1,4 +1,4 @@
-import { Form, Head } from "@inertiajs/react"
+import { Form, Head, router } from "@inertiajs/react"
 import posthog from "posthog-js"
 import { toast } from "sonner"
 
@@ -6,37 +6,27 @@ import ascensionHero from "@/assets/illustrations/ascensionHero.png"
 import heroInputScrollTexture from "@/assets/illustrations/heroInput-scrollTexture.svg"
 import { Button } from "@/components/ui/button"
 import { SpinnerCustom } from "@/components/ui/spinner"
+import { loginPath } from "@/routes"
 
 import "./landing.css"
 
 export default function Landing() {
-  const csrfToken = document
-    .querySelector('meta[name="csrf-token"]')
-    ?.getAttribute("content")
-  const authenticityToken = csrfToken ?? ""
-
   return (
     <>
       <Head title="Ascension" />
       <main className="landing-page min-h-screen">
-        <form method="post" action="/auth/hackclub" className="contents">
-          <input
-            type="hidden"
-            name="authenticity_token"
-            value={authenticityToken}
-          />
-          <Button
-            className="cta-secondary-button"
-            variant="ctaSecondary"
-            size="ctaSecondary"
-            type="submit"
-            onClick={() => {
-              posthog.capture("auth_login_clicked", { provider: "hackclub" })
-            }}
-          >
-            login →
-          </Button>
-        </form>
+        <Button
+          className="cta-secondary-button"
+          variant="ctaSecondary"
+          size="ctaSecondary"
+          type="button"
+          onClick={() => {
+            posthog.capture("auth_login_clicked", { provider: "hackclub" })
+            router.get(loginPath())
+          }}
+        >
+          login →
+        </Button>
         <img
           className="landing-page__logo"
           src={ascensionHero}

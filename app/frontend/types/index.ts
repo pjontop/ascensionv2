@@ -1,8 +1,8 @@
 import type { LucideIcon } from "lucide-react"
 
 export interface Auth {
-  user: User
-  session: Pick<Session, "id">
+  user: User | null
+  session: Pick<Session, "id"> | null
 }
 
 export interface BreadcrumbItem {

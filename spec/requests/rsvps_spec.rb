@@ -34,6 +34,8 @@ RSpec.describe "Rsvps", type: :request do
         .and have_enqueued_job(SyncRsvpToLoopsJob)
 
       expect(response).to redirect_to(landing_path)
+      follow_redirect!
+      expect(response).to have_http_status(:ok)
 
       rsvp = Rsvp.order(:created_at).last
       expect(rsvp.email).to eq("skibidi@gmail.com")
@@ -59,6 +61,8 @@ RSpec.describe "Rsvps", type: :request do
       expect(enqueued_jobs).to be_empty
 
       expect(response).to redirect_to(landing_path)
+      follow_redirect!
+      expect(response).to have_http_status(:ok)
     end
   end
 end
