@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_20_154757) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_20_193000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -22,6 +22,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_20_154757) do
     t.datetime "submitted_at", null: false
     t.datetime "updated_at", null: false
     t.string "user_agent"
+    t.index "lower((email)::text)", name: "index_rsvps_on_lower_email_unique", unique: true
     t.index ["email"], name: "index_rsvps_on_email", unique: true
     t.index ["submitted_at"], name: "index_rsvps_on_submitted_at"
   end

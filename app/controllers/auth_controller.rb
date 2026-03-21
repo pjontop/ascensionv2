@@ -12,9 +12,10 @@ class AuthController < ApplicationController
     )
 
     if request.headers["X-Inertia"] == "true"
-      inertia_location "/auth/hackclub"
+      response.set_header("X-Inertia-Location", "#{request.base_url}/auth/hackclub")
+      head :conflict
     else
-      redirect_to "/auth/hackclub", allow_other_host: true
+      redirect_to "/auth/hackclub"
     end
   end
 

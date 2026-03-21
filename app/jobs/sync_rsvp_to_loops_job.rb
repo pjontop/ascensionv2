@@ -5,6 +5,8 @@ class SyncRsvpToLoopsJob < ApplicationJob
   queue_as :default
 
   def perform(rsvp_id)
+
+    return unless loops_sync_enabled?
     return if Rails.application.credentials.dig(:loops, :api_key).blank?
 
     rsvp = Rsvp.find_by(id: rsvp_id)
@@ -50,6 +52,15 @@ class SyncRsvpToLoopsJob < ApplicationJob
   end
 
   private
+# don't sync loops in a test environment and allow the ability to disable
+  def loops_sync_enabled?
+    return false if Rails.env.test?
+
+    credentials_value = Rails.application.credentials.dig(:loops, :sync_enabled)
+    return true if credentials_value.nil?
+
+    ActiveModel::Type::Boolean.new.cast(credentials_value)
+  end
 
   def event_name
     Rails.application.credentials.dig(:loops, :signup_event_name).presence || "RSVP"
