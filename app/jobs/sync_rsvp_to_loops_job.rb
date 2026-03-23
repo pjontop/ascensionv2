@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# sonnnnnn
 class SyncRsvpToLoopsJob < ApplicationJob
   queue_as :default
 

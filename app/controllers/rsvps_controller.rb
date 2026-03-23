@@ -7,7 +7,7 @@ require "net/http"
 class RsvpsController < InertiaController
   # rate limit, by ip, otherwise loops will do it for us
   MAX_RSVPS_PER_WINDOW = 5
-  RSVP_RATE_LIMIT_WINDOW = 10.minutes
+  RSVP_RATE_LIMIT_WINDOW = 1.minutes
   GEOLOCATION_CACHE_TTL = 6.hours
 
   before_action :enforce_rsvp_rate_limit!, only: :create
@@ -98,14 +98,11 @@ class RsvpsController < InertiaController
     redirect_back_or_to(
       landing_path,
       alert: "Too many RSVP attempts. Please try again later.",
-      inertia: {errors: {email: ["Too many submissions from your network. Please wait and try again."]}}
     )
   end
 
   def increment_counter(key, expires_in:)
-    next_value = Rails.cache.read(key).to_i + 1
-    Rails.cache.write(key, next_value, expires_in: expires_in)
-    next_value
+    Rails.cache.increment(key, 1, expires_in: expires_in) || 1
   rescue StandardError
     1
   end

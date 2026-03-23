@@ -184,18 +184,3 @@
   right: 3.44rem;
   z-index: 2;
 }
-
-@media (max-width: 767px) {
-  .landing-page {
-    --landing-logo-top-offset: 4rem;
-    --landing-logo-width: min(90vw, 32.5rem);
-    --landing-headline-top-offset: 15.3125rem;
-    --landing-headline-size: 32px;
-    --landing-headline-line-height: 36px;
-    --landing-cta-top-offset: 21.125rem;
-    --landing-cta-width: min(90vw, 29.2rem);
-    --landing-cta-height: 2.5rem;
-    --landing-cta-button-top-offset: 25rem;
-    background-position: left center;
-  }
-}

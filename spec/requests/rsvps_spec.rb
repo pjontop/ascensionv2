@@ -142,6 +142,7 @@ RSpec.describe "Rsvps", type: :request do
       allow(Rails).to receive(:cache).and_return(broken_cache)
       allow(broken_cache).to receive(:read).and_raise(StandardError)
       allow(broken_cache).to receive(:write).and_raise(StandardError)
+      allow(broken_cache).to receive(:increment).and_raise(StandardError)
 
       expect do
         post rsvps_path, params: {email: "cache-down@gmail.com"}, headers: headers

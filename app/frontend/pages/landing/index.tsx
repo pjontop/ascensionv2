@@ -1,4 +1,4 @@
-import { Form, Head, router } from "@inertiajs/react"
+import { Form, Head } from "@inertiajs/react"
 import posthog from "posthog-js"
 import { toast } from "sonner"
 
@@ -8,7 +8,8 @@ import { Button } from "@/components/ui/button"
 import { SpinnerCustom } from "@/components/ui/spinner"
 import { loginPath } from "@/routes"
 
-import "./landing.css"
+import "./landing.desktop.css"
+import "./landing.mobile.css"
 
 export default function Landing() {
   return (
@@ -22,7 +23,7 @@ export default function Landing() {
           type="button"
           onClick={() => {
             posthog.capture("auth_login_clicked", { provider: "hackclub" })
-            router.get(loginPath())
+            window.location.assign(loginPath())
           }}
         >
           login →

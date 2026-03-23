@@ -12,26 +12,40 @@ class AuthController < ApplicationController
     )
 
     if request.headers["X-Inertia"] == "true"
-      response.set_header("X-Inertia-Location", "#{request.base_url}/auth/hackclub")
+      response.set_header("X-Inertia-Location", login_url)
       head :conflict
-    else
-      redirect_to "/auth/hackclub"
+      return
     end
+
+    render inline: <<~ERB, layout: false
+      <!doctype html>
+      <html>
+        <head>
+          <meta charset="utf-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <title>Redirecting to Hack Club Auth</title>
+        </head>
+        <body>
+          <form id="auth-start-form" method="post" action="/auth/hackclub">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>" />
+          </form>
+          <noscript>
+            <p>JavaScript is required to continue. Please click below.</p>
+            <button form="auth-start-form" type="submit">Continue</button>
+          </noscript>
+          <script nonce="<%= content_security_policy_nonce %>">
+            document.getElementById('auth-start-form').submit()
+          </script>
+        </body>
+      </html>
+    ERB
   end
 
   def callback
     auth = request.env["omniauth.auth"]
 
-    user = User.find_or_create_by(uid: auth["uid"]) do |u|
-      u.name = auth.dig("info", "name")
-      u.email = auth.dig("info", "email")
-      u.slack_id = auth.dig("extra", "raw_info", "slack_id")
-      u.email_verified = auth.dig("extra", "raw_info", "email_verified")
-      u.verification_status = auth.dig("extra", "raw_info", "verification_status")
-      u.ysws_eligible = auth.dig("extra", "raw_info", "ysws_eligible")
-    end
-
-    user.update(
+    user = User.find_or_initialize_by(uid: auth["uid"])
+    user.update!(
       name: auth.dig("info", "name"),
       email: auth.dig("info", "email"),
       slack_id: auth.dig("extra", "raw_info", "slack_id"),
@@ -63,7 +77,7 @@ class AuthController < ApplicationController
     )
 
     session[:user_id] = user.id
-    redirect_to "/landing", notice: "Logged in as #{user.name}"
+    redirect_to landing_path, notice: "Logged in as #{user.name}"
   end
 
   def logout
