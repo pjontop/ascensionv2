@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { SpinnerCustom } from "@/components/ui/spinner"
 import { loginPath } from "@/routes"
 
+import "./landing.css"
 import "./landing.desktop.css"
 import "./landing.mobile.css"
 

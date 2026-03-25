@@ -1,0 +1,34 @@
+{
+  "errors": {
+    "400": {
+      "title": "Bad Request",
+      "description": "The server could not process your request.",
+      "cta": "Go Home →"
+    },
+    "403": {
+      "title": "Forbidden",
+      "description": "Sorry, you are forbidden from accessing this page.",
+      "cta": "Go Home →"
+    },
+    "404": {
+      "title": "Not Found",
+      "description": "The URL you tried to visit couldn't be found or doesn't exist.",
+      "cta": "Go Home →"
+    },
+    "422": {
+      "title": "Rejected",
+      "description": "Sorry, your request could not be processed.",
+      "cta": "Go Home →"
+    },
+    "500": {
+      "title": "Server Error",
+      "description": "Whoops, something went wrong on our servers.",
+      "cta": "Go Home →"
+    },
+    "503": {
+      "title": "Service Unavailable",
+      "description": "Sorry, we are doing some maintenance. Please check back soon.",
+      "cta": "Go Home →"
+    }
+  }
+}

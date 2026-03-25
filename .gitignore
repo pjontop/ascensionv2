@@ -34,3 +34,7 @@
 /public/vite*
 node_modules
 *.local
+
+#Cluade
+
+.claude/*

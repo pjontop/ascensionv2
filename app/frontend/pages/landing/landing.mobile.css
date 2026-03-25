@@ -8,8 +8,10 @@
 
   .landing-page__logo {
     top: 5.5rem;
-    width: 23.875rem;
-    height: 7.125rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 3.02rem);
+    height: auto;
     aspect-ratio: 191 / 57;
   }
 
@@ -36,12 +38,18 @@
     bottom: calc(1.88rem + 2.25rem + 1.56rem);
     left: 1.56rem;
     right: 1.56rem;
+    height: 2.6rem;
     width: auto;
     transform: none;
   }
 
   .cta-email__ornament {
     display: none;
+  }
+
+  .ui-button-cta {
+    font-size: 24px;
+    text-align: center;
   }
 
   .cta-button-anchor {
