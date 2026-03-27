@@ -30,6 +30,14 @@ module ReactStarterKit
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
 
+    # Broadcast Rails.logger to OpenTelemetry so all log calls are shipped
+    # to PostHog. OtelLogDevice is a no-op when OtelLogs is not initialized.
+    config.after_initialize do
+      otel_logger = ActiveSupport::Logger.new(OtelLogDevice.new)
+      otel_logger.level = Rails.logger.level
+      Rails.logger = ActiveSupport::BroadcastLogger.new(Rails.logger, otel_logger)
+    end
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

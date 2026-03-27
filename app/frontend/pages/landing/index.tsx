@@ -2,7 +2,7 @@ import { Form, Head } from "@inertiajs/react"
 import posthog from "posthog-js"
 import { toast } from "sonner"
 
-import ascensionHero from "@/assets/illustrations/ascensionHero.png"
+import ascensionHero from "@/assets/illustrations/ascensionHeroSVG.svg"
 import heroInputScrollTexture from "@/assets/illustrations/heroInput-scrollTexture.svg"
 import { Button } from "@/components/ui/button"
 import { SpinnerCustom } from "@/components/ui/spinner"
